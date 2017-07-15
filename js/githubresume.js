@@ -105,7 +105,7 @@ var github_user_starred_resume = function(username, page) {
     var star  = false;
     var repos = [];
     var page  = (page ? page : 1);
-    var url   = 'https://api.github.com/users/' + username + '/starred?per_page=100&page=' + page;
+    var url   = 'https://api.github.com/users/' + username + '/repos';
     var errorMsg;
 
     $.ajax({
@@ -113,7 +113,7 @@ var github_user_starred_resume = function(username, page) {
         async: false,
         dataType: 'json',
         success: function(data) {
-            repos = data;
+            repos = data.reverse();
         },
         error: function(e) {
             if (e.status == 403) {
