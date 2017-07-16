@@ -334,8 +334,9 @@ var run = function() {
             sorted.push({position: i, popularity: popularity, info: repo});
         });
 
+        // edit the sort to be by revese order instead of popularity, to show the latest repos first
         function sortByPopularity(a, b) {
-            return b.popularity - a.popularity;
+            return b.position - a.position;
         };
 
         sorted.sort(sortByPopularity);
