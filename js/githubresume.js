@@ -331,15 +331,25 @@ var run = function() {
             }
 
             popularity = repo.watchers + repo.forks;
-            sorted.push({position: i, popularity: popularity, info: repo});
+            sorted.push({position: i, popularity: popularity, info: repo, date: repo.created_at});
         });
 
-        // edit the sort to be by revese order instead of popularity, to show the latest repos first
         function sortByPopularity(a, b) {
-            return b.position - a.position;
+            return b.popularity - a.popularity;
         };
 
-        sorted.sort(sortByPopularity);
+        // Add sort function by position
+        function sortByPosition(a, b) {
+          return b.position - a.position;
+        };
+
+        // Add sort function by created_at date
+        function sortByDate(a, b) {
+          return new Date(b.date) - new Date(a.date);
+        }
+
+        // edit the sort to be by revese order instead of popularity, to show the latest repos first
+        sorted.sort(sortByDate);
 
         var languageTotal = 0;
         function sortLanguages(languages, limit) {
