@@ -150,7 +150,7 @@ var run = function() {
     var itemCount = 0,
         maxItems = 5,
         maxLanguages = 9,
-        starred = true; github_user_starred_resume(username);
+        starred = true; //github_user_starred_resume(username);
 
     if (!starred || starred === 'api_limit' || starred === 'not_found') {
         if (starred === 'api_limit') {
