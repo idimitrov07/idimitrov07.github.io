@@ -102,10 +102,10 @@ var github_user_orgs = function(username, callback) {
 //
 // Returns true/false.
 var github_user_starred_resume = function(username, page) {
-    var star  = false;
+    var star  = true;
     var repos = [];
     var page  = (page ? page : 1);
-    var url   = 'https://api.github.com/users/' + username + '/repos';
+    var url   = 'https://api.github.com/users/' + username + '/starred?per_page=100&page=' + page;
     var errorMsg;
 
     $.ajax({
@@ -113,7 +113,7 @@ var github_user_starred_resume = function(username, page) {
         async: false,
         dataType: 'json',
         success: function(data) {
-            repos = data.reverse();
+            repos = data;
         },
         error: function(e) {
             if (e.status == 403) {
@@ -150,39 +150,39 @@ var run = function() {
     var itemCount = 0,
         maxItems = 5,
         maxLanguages = 9,
-        starred = github_user_starred_resume(username);
+        //starred = github_user_starred_resume(username);
 
-    if (!starred || starred === 'api_limit' || starred === 'not_found') {
-        if (starred === 'api_limit') {
-            $.ajax({
-                url: 'views/api_limit.html',
-                dataType: 'html',
-                success: function(data) {
-                    var template = data;
-                    $('#resume').html(data);
-                }
-            });
-        } else if (starred === 'not_found') {
-            $.ajax({
-                url: 'views/not_found.html',
-                dataType: 'html',
-                success: function(data) {
-                    var template = data;
-                    $('#resume').html(data);
-                }
-            });
-        } else {
-            $.ajax({
-                url: 'views/opt_out.html',
-                dataType: 'html',
-                success: function(data) {
-                    var template = data;
-                    $('#resume').html(data);
-                }
-            });
-        }
-        return;
-    }
+    // if (!starred || starred === 'api_limit' || starred === 'not_found') {
+    //     if (starred === 'api_limit') {
+    //         $.ajax({
+    //             url: 'views/api_limit.html',
+    //             dataType: 'html',
+    //             success: function(data) {
+    //                 var template = data;
+    //                 $('#resume').html(data);
+    //             }
+    //         });
+    //     } else if (starred === 'not_found') {
+    //         $.ajax({
+    //             url: 'views/not_found.html',
+    //             dataType: 'html',
+    //             success: function(data) {
+    //                 var template = data;
+    //                 $('#resume').html(data);
+    //             }
+    //         });
+    //     } else {
+    //         $.ajax({
+    //             url: 'views/opt_out.html',
+    //             dataType: 'html',
+    //             success: function(data) {
+    //                 var template = data;
+    //                 $('#resume').html(data);
+    //             }
+    //         });
+    //     }
+    //     return;
+    // }
 
     var res = github_user(username, function(data) {
         data = data.data;
